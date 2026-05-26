@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>體驗職場 Vibe Coding 工作術</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/night.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+  
+  <!-- Wordcloud CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/wordcloud@1.2.2/src/wordcloud2.min.js"></script>
+  
+  <style>
+    /* === 全域變數與主題擴充 === */
+    :root {
+      --accent:  #e8643a;   /* 橘紅 */
+      --accent2: #4fc3f7;   /* 青藍 */
+      --success: #81c784;   /* 綠色 */
+      --warn:    #ffb74d;   /* 琥珀 */
+      --dark-bg: #0d1117;
+    }
+
+    .reveal {
+      font-family: 'Inter', 'Noto Sans TC', 'Segoe UI', sans-serif;
+      background: var(--dark-bg);
+      color: #e6edf3;
+    }
+
+    .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+      font-family: 'Inter', 'Noto Sans TC', sans-serif;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      text-shadow: 0 0 20px rgba(0,0,0,0.6);
+    }
+    
+    .reveal h1 { 
+      font-size: 2.0em; 
+      line-height: 1.15;
+      background: linear-gradient(135deg, #ffffff 30%, var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .reveal h2 { 
+      font-size: 1.4em; 
+      color: var(--accent2);
+      border-bottom: 2px solid rgba(79,195,247,0.2);
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+
+    .reveal h3 {
+      font-size: 1.0em;
+      color: var(--warn);
+    }
+
+    .reveal p, .reveal li {
+      font-size: 0.55em;
+      line-height: 1.6;
+      color: #c9d1d9;
+    }
+
+    /* === 玻璃擬態卡片 === */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      transition: all 0.3s ease;
+    }
+    .glass-card:hover {
+      border-color: rgba(79, 195, 247, 0.3);
+      box-shadow: 0 8px 32px 0 rgba(79, 195, 247, 0.1);
+    }
+
+    /* === 封面 === */
+    .title-slide { 
+      text-align: center; 
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+    .title-slide .tag {
+      display: inline-block;
+      background: linear-gradient(90deg, var(--accent), #f28b6e);
+      color: #0d1117;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.45em;
+      letter-spacing: 0.1em;
+      margin-bottom: 1em;
+      font-weight: 800;
+      text-transform: uppercase;
+      box-shadow: 0 0 15px rgba(232, 100, 58, 0.4);
+    }
+    .title-slide .subtitle { 
+      font-size: 0.7em; 
+      color: #8b949e; 
+      margin-top: 0.5em; 
+    }
+    .title-slide .author { 
+      margin-top: 2em; 
+      font-size: 0.45em; 
+      color: #58a6ff; 
+      font-weight: 600;
+    }
+
+    /* === 二欄 / 三欄佈局 === */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: stretch; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; align-items: stretch; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; align-items: stretch; }
+
+    /* === 優勢卡（並列特點）=== */
+    .adv-card {
+      background: rgba(255,255,255,0.03);
+      border-top: 4px solid var(--accent2);
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      height: 100%;
+      border-left: 1px solid rgba(255,255,255,0.05);
+      border-right: 1px solid rgba(255,255,255,0.05);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .adv-card .adv-icon { 
+      margin-bottom: 15px; 
+    }
+    .adv-card .adv-icon img {
+      width: 64px; height: 64px; object-fit: contain;
+      display: block; margin: 0 auto;
+      filter: drop-shadow(0 0 12px rgba(79,195,247,0.5));
+    }
+    .adv-card .adv-title { 
+      font-size: 0.55em; 
+      font-weight: 800; 
+      color: var(--accent2); 
+      margin-bottom: 10px; 
+    }
+    .adv-card .adv-desc { 
+      font-size: 0.4em; 
+      color: #8b949e; 
+      line-height: 1.5; 
+    }
+
+    /* === VS 對比 === */
+    .vs-grid { display: grid; grid-template-columns: 1fr 50px 1fr; gap: 10px; align-items: stretch; margin-top: 0.6em; }
+    .vs-col { background: rgba(255,255,255,0.03); border-radius: 12px; padding: 20px; border: 1px solid rgba(255,255,255,0.06); }
+    .vs-col.left-col  { border-top: 4px solid var(--accent2); }
+    .vs-col.right-col { border-top: 4px solid var(--warn); }
+    .vs-label { font-size: 0.65em; font-weight: 800; margin-bottom: 12px; }
+    .vs-label.left  { color: var(--accent2); }
+    .vs-label.right { color: var(--warn); }
+    .vs-center { display: flex; align-items: center; justify-content: center; font-size: 1.2em; font-weight: 900; color: #484f58; }
+    .vs-col ul { font-size: 0.42em; list-style: none; padding: 0; margin: 0; text-align: left; }
+    .vs-col ul li { padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.06); color: #c9d1d9; }
+    .vs-col ul li:last-child { border-bottom: none; }
+    .vs-col ul li::before { content: "✦ "; color: var(--accent2); opacity: 0.8; }
+    .vs-col.right-col ul li::before { content: "✦ "; color: var(--warn); opacity: 0.8; }
+
+    /* === 時間軸 === */
+    .timeline { position: relative; padding-left: 40px; margin-top: 0.8em; text-align: left; max-width: 800px; margin-left: auto; margin-right: auto; }
+    .timeline::before {
+      content: ''; position: absolute; left: 15px; top: 8px; bottom: 8px;
+      width: 3px; background: rgba(79,195,247,0.3);
+      box-shadow: 0 0 8px rgba(79,195,247,0.2);
+    }
+    .timeline-item { position: relative; margin-bottom: 24px; }
+    .timeline-item::before {
+      content: ''; position: absolute; left: -31px; top: 6px;
+      width: 12px; height: 12px; border-radius: 50%;
+      background: var(--accent2); border: 3px solid var(--dark-bg);
+      box-shadow: 0 0 10px var(--accent2);
+    }
+    .timeline-item .ti-date { color: var(--accent2); font-weight: 800; font-size: 0.55em; margin-bottom: 4px; }
+    .timeline-item .ti-text { color: #c9d1d9; font-size: 0.46em; }
+
+    /* === 引用區塊 === */
+    .quote-box {
+      background: rgba(255,255,255,0.03);
+      border-left: 4px solid var(--accent);
+      border-radius: 4px 12px 12px 4px;
+      padding: 24px 30px;
+      margin: 1em auto;
+      max-width: 850px;
+      font-size: 0.6em;
+      color: #e6edf3;
+      font-style: italic;
+      line-height: 1.7;
+      text-align: left;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      border-right: 1px solid rgba(255,255,255,0.05);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .quote-author { font-size: 0.65em; color: #8b949e; text-align: right; margin-top: 12px; font-style: normal; font-weight: 600; }
+
+    /* === 程式碼區塊 === */
+    pre code {
+      font-size: 0.4em !important;
+      line-height: 1.5 !important;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: #010409 !important;
+    }
+
+    /* === QR Code 及連結頁 === */
+    .qr-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 1.5em;
+    }
+    .qr-code {
+      width: 220px;
+      height: 220px;
+      padding: 12px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .qr-link {
+      font-size: 0.6em;
+      color: var(--accent2);
+      font-weight: 700;
+      text-decoration: none;
+      border-bottom: 2px dashed var(--accent2);
+      padding-bottom: 2px;
+    }
+
+    /* === 結論展示 === */
+    .conclusion-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 0.8em; }
+    .conclusion-card { border-radius: 12px; padding: 20px; font-size: 0.45em; text-align: left; }
+    .conclusion-card.positive {
+      background: rgba(129,199,132,0.08);
+      border: 1px solid rgba(129,199,132,0.3);
+      border-top: 4px solid var(--success);
+    }
+    .conclusion-card.caution {
+      background: rgba(255,183,77,0.06);
+      border: 1px solid rgba(255,183,77,0.25);
+      border-top: 4px solid var(--warn);
+    }
+    .conclusion-card .cc-title { font-size: 1.2em; font-weight: 800; margin-bottom: 12px; }
+    .conclusion-card.positive .cc-title { color: var(--success); }
+    .conclusion-card.caution  .cc-title { color: var(--warn); }
+    .conclusion-card ul { list-style: none; padding: 0; margin: 0; line-height: 1.7; }
+    .conclusion-card ul li { margin-bottom: 8px; color: #c9d1d9; }
+    .conclusion-card ul li::before { content: "→ "; color: inherit; opacity: 0.7; font-weight: 900; }
+
+    /* === 封底 === */
+    .end-slide { text-align: center; }
+    .end-slide .big { margin-bottom: 0.5em; }
+    .end-slide .tagline { font-size: 0.7em; color: #8b949e; margin-top: 1em; }
+  </style>
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+
+    <!-- Slide 1: 封面 -->
+    <section data-background-image="images/cover.png"
+             data-background-opacity="0.35"
+             data-background-size="cover">
+      <div class="title-slide">
+        <div class="tag">AI 職場自動化特訓</div>
+        <h1>體驗職場 Vibe Coding 工作術</h1>
+        <p class="subtitle">自然語言程式設計：用對話打造你的自動化辦公室</p>
+        <p class="author">講師：Arthur Chen (陳文舟) &bull; 2026/01/14</p>
+      </div>
+    </section>
+
+    <!-- Slide 2: 關於講師 -->
+    <section>
+      <h2>關於講師</h2>
+      <div class="grid-2" style="align-items: center;">
+        <div class="glass-card" style="text-align: center;">
+          <h3 style="font-size:1.6em; color:var(--accent2); margin:0;">陳文舟</h3>
+          <p style="font-size:0.55em; color:#8b949e; margin-bottom: 15px;">Arthur Chen</p>
+          <p style="font-size:0.48em; text-align:left; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 15px;">
+            📧 wildboy.arthur@gmail.com<br>
+            📺 YouTube: <a href="https://www.youtube.com/@drccr" target="_blank" style="color:var(--accent2);">@drccr</a>
+          </p>
+        </div>
+        <div class="glass-card" style="text-align: left; display:flex; flex-direction:column; justify-content:center;">
+          <h4 style="font-size:0.6em; color:var(--warn); margin-bottom:12px; font-weight:800;">專業領域與經歷</h4>
+          <ul style="font-size:0.42em; line-height: 1.8; padding-left: 20px;">
+            <li>AI 影音製作與實務教學</li>
+            <li>AI 辦公室效率化與流程自動化</li>
+            <li>AI 輔助程式開發 (Vibe Coding)</li>
+            <li>物聯網專案實作、教材設計</li>
+            <li>多所學校業師、產學單位特約講師</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 3: 講義連結 -->
+    <section>
+      <h2>課程講義</h2>
+      <p style="text-align:center;">掃描下方 QR Code 或點擊連結取得本堂課完整講義：</p>
+      <div class="qr-container">
+        <img class="qr-code" src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=https://reurl.cc/W8oKVy" alt="https://reurl.cc/W8oKVy">
+        <a class="qr-link" href="https://reurl.cc/W8oKVy" target="_blank">https://reurl.cc/W8oKVy</a>
+      </div>
+    </section>
+
+    <!-- Slide 4: 第一單元章節封面 -->
+    <section data-background-image="images/unit1.png"
+             data-background-opacity="0.3"
+             data-background-size="cover">
+      <div style="text-align: center; padding: 40px 0;">
+        <span style="font-size:0.5em; color:var(--accent2); font-weight:800; letter-spacing:0.2em; text-transform:uppercase;">Part 1</span>
+        <h1 style="font-size: 2.2em; margin-top:10px; color:#fff;">從資料清洗到業績分析</h1>
+        <p style="font-size:0.65em; color:#8b949e; margin-top:20px;">以 Google Apps Script (GAS) 實戰為例</p>
+      </div>
+    </section>
+
+    <!-- Slide 5: 痛點診斷 -->
+    <section>
+      <h2>痛點診斷</h2>
+      <div class="quote-box">
+        「你的時間不該浪費在 Ctrl+C / Ctrl+V 上。」
+        <div class="quote-author">— Arthur Chen</div>
+      </div>
+      <div class="glass-card" style="max-width: 850px; margin: 0 auto; text-align: left; font-size: 0.9em;">
+        <h4 style="font-size:0.6em; color:var(--warn); margin-bottom:8px;">常見情境模擬 😫</h4>
+        <p style="font-size:0.46em; margin:0;">
+          每個月底，老闆會丟來好幾個分店傳來的 Excel 模擬訂單檔案，<br>
+          要你手動統整、排除異常格式，並回答最關鍵的商業問題：<strong style="color:var(--accent2);">「哪一個月業績最好？」</strong>
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 6: 崩潰日常 vs Vibe Coding [VIZ] -->
+    <section id="slide-viz">
+      <h2>手動地獄 vs. 智慧自動化</h2>
+      <div style="position:relative; height:380px; border-radius:12px; overflow:hidden; border:1px solid rgba(255,255,255,0.1); margin-bottom: 20px;">
+        <!-- Before Content -->
+        <div id="viz-before" style="position:absolute; inset:0; background:rgba(255,71,87,0.06); padding:30px; display:flex; flex-direction:column; justify-content:center; text-align:left;">
+          <h3 style="color:#ff4757; font-size:1.1em; margin-bottom: 15px;">手動複製 & 格式地獄 (Before)</h3>
+          <ul style="font-size:0.42em; line-height: 1.8;">
+            <li>❌ <strong>手動複製貼上</strong>：開好幾個視窗，按到手軟又容易漏資料。</li>
+            <li>❌ <strong>格式地獄</strong>：日期有民國 112.05.05，也有西元 2023/1/1，手機欄位亂七八糟。</li>
+            <li>❌ <strong>無法直接分析</strong>：資料內夾雜 PENDING 等文字，樞紐分析直接當機。</li>
+          </ul>
+        </div>
+        <!-- After Content -->
+        <div id="viz-after" style="position:absolute; inset:0; background:rgba(79,195,247,0.1); padding:30px; display:flex; flex-direction:column; justify-content:center; text-align:left; clip-path:inset(0 100% 0 0); transition: clip-path 0.1s ease;">
+          <h3 style="color:var(--accent2); font-size:1.1em; margin-bottom: 15px;">Vibe Coding 自然語言開發 (After)</h3>
+          <ul style="font-size:0.42em; line-height: 1.8;">
+            <li>✨ <strong>零程式門檻</strong>：我們不學複雜程式語法，我們只用「自然語言」指揮 AI。</li>
+            <li>✨ <strong>自動化清洗</strong>：一鍵標準化日期、電話、金額，錯誤項目自動標記紅色。</li>
+            <li>✨ <strong>自動分析報告</strong>：秒級產出月報表，自動找出黃金業績月份。</li>
+          </ul>
+        </div>
+        <!-- Split Line -->
+        <div id="viz-divider" style="position:absolute; top:0; left:0; width:3px; height:100%;
+          background:linear-gradient(to bottom, transparent, var(--accent2), transparent);
+          box-shadow:0 0 12px var(--accent2); pointer-events:none;"></div>
+      </div>
+      <div style="display:flex; justify-content:space-between; align-items:center; max-width:600px; margin: 0 auto;">
+        <span style="font-size:0.35em; color:#ff4757; font-weight:700;">手動複製 😫</span>
+        <input id="viz-slider" type="range" min="0" max="100" value="0" style="flex:1; margin:0 15px; cursor:pointer;">
+        <span style="font-size:0.35em; color:var(--accent2); font-weight:700;">Vibe Coding! 🚀</span>
+      </div>
+    </section>
+
+    <!-- Slide 7: 任務地圖 [ICON] -->
+    <section>
+      <h2>任務地圖：打造數據自動化流水線</h2>
+      <p style="font-size:0.45em; margin-bottom:20px;">今天的實作將完整完成三個自動化階段 (Input ➔ Process ➔ Output)</p>
+      <div class="grid-3">
+        <div class="adv-card">
+          <div class="adv-icon"><img src="images/icon_factory.png" alt="Input"></div>
+          <div class="adv-title">01. Input (製造亂源)</div>
+          <div class="adv-desc">利用 Prompt 讓 AI 先生成一份格式極度混亂的模擬訂單，當作我們的練習靶子。</div>
+        </div>
+        <div class="adv-card">
+          <div class="adv-icon"><img src="images/icon_broom.png" alt="Process"></div>
+          <div class="adv-title">02. Process (智能清洗)</div>
+          <div class="adv-desc">用自然語言指揮 AI 備份原始檔，並跑迴圈標準化日期、手機格式，將髒金額過濾。</div>
+        </div>
+        <div class="adv-card">
+          <div class="adv-icon"><img src="images/icon_chart.png" alt="Output"></div>
+          <div class="adv-title">03. Output (商業洞察)</div>
+          <div class="adv-desc">自動加總每月業績並生成月報表，用亮眼金黃色標示出業績最高的月份。</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 8: Vibe Coding 核心 [ICON] -->
+    <section>
+      <h2>Vibe Coding 核心：黃金 Prompt 公式</h2>
+      <p style="font-size:0.42em; margin-bottom:15px;">在 AI 時代，你不需要背程式碼，你只需要學會「說話」的邏輯。</p>
+      <div class="grid-4">
+        <div class="adv-card" style="border-top-color: var(--accent);">
+          <div class="adv-icon"><img src="images/icon_role.png" alt="Role"></div>
+          <div class="adv-title" style="color:var(--accent);">Role (角色)</div>
+          <div class="adv-desc">「你是一位 Google Apps Script (GAS) 開發專家…」</div>
+        </div>
+        <div class="adv-card" style="border-top-color: var(--accent2);">
+          <div class="adv-icon"><img src="images/icon_task.png" alt="Task"></div>
+          <div class="adv-title" style="color:var(--accent2);">Task (任務)</div>
+          <div class="adv-desc">「幫我寫一個腳本處理這張試算表的資料清洗…」</div>
+        </div>
+        <div class="adv-card" style="border-top-color: var(--warn);">
+          <div class="adv-icon"><img src="images/icon_constraint.png" alt="Constraint"></div>
+          <div class="adv-title" style="color:var(--warn);">Constraint (限制)</div>
+          <div class="adv-desc">「手機統一為西元、遇到民國年轉西元、異常金額標記紅色…」</div>
+        </div>
+        <div class="adv-card" style="border-top-color: var(--success);">
+          <div class="adv-icon"><img src="images/icon_goal.png" alt="Goal"></div>
+          <div class="adv-title" style="color:var(--success);">Goal (預期結果)</div>
+          <div class="adv-desc">「產出獨立的 Cleaned_Data 分頁，並彈出完成視窗。」</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 9: 環境準備 -->
+    <section>
+      <h2>環境準備：開啟你的魔法書</h2>
+      <div class="grid-3">
+        <div class="glass-card">
+          <h3 style="color:var(--accent2); margin-top:0;">1. 建立戰場</h3>
+          <p style="font-size:0.4em; text-align:left; margin:0;">
+            打開範例 Google 試算表，建立自己的副本檔案，作為本次實作練習的場地。
+          </p>
+        </div>
+        <div class="glass-card">
+          <h3 style="color:var(--accent2); margin-top:0;">2. 呼叫精靈</h3>
+          <p style="font-size:0.4em; text-align:left; margin:0;">
+            點選上方選單 <strong>擴充功能 &gt; Apps Script</strong> 開啟指令碼編輯器。同時在側邊打開 <strong>Google Gemini</strong>。
+          </p>
+        </div>
+        <div class="glass-card">
+          <h3 style="color:var(--accent2); margin-top:0;">3. 準備起飛</h3>
+          <p style="font-size:0.4em; text-align:left; margin:0;">
+            記住關鍵：如果 AI 寫出的程式有錯，<strong>直接把錯誤訊息複製貼回</strong>給 AI 讓它修正，這就是 Vibe Coding 的核心精髓！
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 10: STEP 1: 製造亂源 -->
+    <section>
+      <h2>STEP 1: 製造亂源 (生成測試資料)</h2>
+      <p style="font-size:0.45em; margin-bottom: 10px;">複製以下咒語 (Prompt) 提供給 Gemini 幫我們生成地獄級髒資料：</p>
+      <pre><code class="language-markdown" style="font-size: 0.35em !important; max-height:300px;">幫我寫個 GAS 腳本，先重置環境：刪掉 RawData 以外的所有分頁，並清空 RawData。
+然後在裡面生 100 筆模擬資料，欄位要有：日期、姓名、手機、金額。
+
+重點是要夠亂：
+手機：最亂的那種。混搭 +886、空格、連字號 -、括號 (09)，像不同人手填的。
+日期：隨機混 YYYY/MM/DD、MM-DD-YYYY 還有民國年.MM.DD。
+姓名：隨機在中間塞空白（像 王 小明）。
+金額：10% 機率填 PENDING，其他 1000~5000。
+標題弄深色背景，做完彈窗說「🔥 資料已噴發！」。</code></pre>
+    </section>
+
+    <!-- Slide 11: STEP 2: 一鍵清洗 -->
+    <section>
+      <h2>STEP 2: 一鍵清洗 (標準化數據)</h2>
+      <p style="font-size:0.45em; margin-bottom: 10px;">複製以下咒語 (Prompt) 提供給 Gemini，自動完成資料清洗邏輯：</p>
+      <pre><code class="language-markdown" style="font-size: 0.35em !important; max-height:300px;">幫我寫個 GAS 腳本，我要做資料清洗。先檢查有沒有一個分頁叫 Cleaned_Data，有就刪掉，然後把 RawData 整個複製一份過去改名叫 Cleaned_Data，我們直接在副本上動工。
+接下來幫我跑迴圈處理裡面那 100 筆資料：
+日期：裡面有民國年（像 112.05.20 這種），要幫我轉成西元，其他亂七八糟的日期格式也順便標準化一下，最後 A 欄統一顯示 yyyy/MM/dd。
+姓名：有些人中間會亂塞空白，全部幫我抓掉。
+手機：先幫我把所有非數字的符號都拿掉。如果是 8869 開頭的就改成 09；如果只有 9 碼且是 9 開頭的就補個 0。記得寫回去時前面要加個單引號，不然 0 會不見。
+金額：只要不是數字（像是填 PENDING 的），全部歸零，而且要把那一格背景噴成紅色。
+最後幫我調整一下欄寬，自動跳轉到新分頁，再彈個視窗說『✅ 資料全方位清洗完畢！』。對了，日期轉換邏輯幫我拆成一個獨立的 function，這樣 code 比較乾淨。</code></pre>
+    </section>
+
+    <!-- Slide 12: STEP 3: 自動統計 -->
+    <section>
+      <h2>STEP 3: 自動統計 (商業分析)</h2>
+      <p style="font-size:0.45em; margin-bottom: 10px;">最後，複製這段 Prompt 請 AI 自動加總資料並產出精美月報表：</p>
+      <pre><code class="language-markdown" style="font-size: 0.35em !important; max-height:300px;">再寫一個 GAS 程式，針對 "Cleaned_Data" 做統計：
+1. 【建立報表】：新增一個工作表命名為 "Report_月報表" (若已存在則先刪除舊的)。
+2. 【統計邏輯】：
+   - 讀取清洗後的資料。
+   - 根據日期欄位判斷月份，統計「每個月」的「訂單金額總和」。
+3. 【輸出格式】：
+   - 在 Report 頁面印出兩欄：「月份」、「總業績」。
+   - 視覺化亮點：找出業績最高的月份，將該列整行背景設為金黃色，字體加粗。</code></pre>
+    </section>
+
+    <!-- Slide 13: 實測演練 -->
+    <section>
+      <h2>實測演練：見證自動化流水線</h2>
+      <p style="font-size:0.45em; margin-bottom: 20px;">現在你的 Apps Script 編輯器已貼上程式碼，讓我們依序執行：</p>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="ti-date">步驟 01. 執行 generateData</div>
+          <div class="ti-text">回到試算表，會看到 RawData 瞬間產生 100 筆混亂資料，並彈出「資料已噴發！」視窗。</div>
+        </div>
+        <div class="timeline-item">
+          <div class="ti-date">步驟 02. 執行 cleanData</div>
+          <div class="ti-text">眨眼間 Cleaned_Data 分頁生成！日期標準化、空白姓名消除、手機格式一致，所有 PENDING 轉為 0 且標紅。</div>
+        </div>
+        <div class="timeline-item">
+          <div class="ti-date">步驟 03. 執行 analyzeSales</div>
+          <div class="ti-text">自動產出 Report_月報表。高業績的月份已自動被標記金黃色，老闆要的商業洞察一秒搞定！✨</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 14: 疑難排解 -->
+    <section>
+      <h2>疑難排解：如果 AI 寫錯了怎麼辦？</h2>
+      <p style="font-size:0.45em; margin-bottom: 20px;">Vibe Coding 的重點不是一次就寫對，而是「持續與 AI 溝通迭代 (Iterate)」。</p>
+      <div class="vs-grid">
+        <div class="vs-col left-col">
+          <div class="vs-label left">狀況 A: 日期解析錯誤 (出現 NaN)</div>
+          <ul>
+            <li>❌ 原因：遇到特殊民國年格式或特殊分隔符，JavaScript Date 無法解析。</li>
+            <li>💡 <strong>修正 Prompt 指令</strong>：<br>「執行時日期欄位出現錯誤，原始資料包含民國年 (如 112.05.01)，請修正你的日期解析邏輯，確保能處理民國年轉西元。」</li>
+          </ul>
+        </div>
+        <div class="vs-center">VS</div>
+        <div class="vs-col right-col">
+          <div class="vs-label right">狀況 B: 統計金額為 0</div>
+          <ul>
+            <li>❌ 原因：試算表讀出的金額為字串格式，加總時直接變成字串相加或無法加總。</li>
+            <li>💡 <strong>修正 Prompt 指令</strong>：<br>「統計結果不對，都是 0，請確保你在加總前，有將金額欄位透過 parseFloat 轉為數字，而不是文字串。」</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 15: 總結與資源 -->
+    <section>
+      <h2>總結與資源：成為自動化魔術師</h2>
+      <div class="conclusion-grid">
+        <div class="conclusion-card positive">
+          <div class="cc-title">🎯 本節課核心收穫</div>
+          <ul>
+            <li><strong>全流程自動化</strong>：串接 Input -> Process -> Output 的生產線。</li>
+            <li><strong>模組化思維</strong>：將任務拆解為 3 個小 Prompt，正確率大於 95%。</li>
+            <li><strong>數據變現</strong>：不只整理資料，更能一鍵產出對決策有幫助的報表。</li>
+          </ul>
+        </div>
+        <div class="conclusion-card caution">
+          <div class="cc-title">🚀 課後 Level Up 挑戰</div>
+          <ul>
+            <li>試著命令 AI 在報表分頁中自動繪製並插入一張長條圖 (Column Chart)。</li>
+            <li>試著按照業務人員姓名，統計每人的業績占比。</li>
+            <li>嘗試在完成清洗後，自動將統計好的 Excel PDF 寄給老闆。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 16: 第二單元章節封面 -->
+    <section data-background-image="images/unit2.png"
+             data-background-opacity="0.3"
+             data-background-size="cover">
+      <div style="text-align: center; padding: 40px 0;">
+        <span style="font-size:0.5em; color:var(--accent); font-weight:800; letter-spacing:0.2em; text-transform:uppercase;">Part 2</span>
+        <h1 style="font-size: 2.2em; margin-top:10px; color:#fff;">AI 知識外掛</h1>
+        <p style="font-size:0.65em; color:#8b949e; margin-top:20px;">從多頁文件到 5 分鐘 Podcast</p>
+      </div>
+    </section>
+
+    <!-- Slide 17: NotebookLM 零門檻實作 -->
+    <section>
+      <h2>NotebookLM 零門檻實作體驗課</h2>
+      <div class="glass-card" style="max-width: 800px; margin: 0 auto; text-align: left;">
+        <h3 style="color:var(--accent2); margin-top:0;">實作核心工具：Google NotebookLM</h3>
+        <p style="font-size: 0.46em; margin-bottom: 10px;">
+          NotebookLM 是 Google 實驗室推出的一款免費、強大的「AI 個人筆記本與知識庫」。
+        </p>
+        <p style="font-size: 0.46em; margin: 0;">
+          <strong>本次目標</strong>：體驗如何在短短 5 分鐘內，秒讀長篇生硬的法規，並將其自動轉換為語音雙人對談的 Podcast，聽懂其核心摘要。
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 18: 資訊爆炸的開會日常 -->
+    <section>
+      <h2>資訊爆炸的開會日常 😫</h2>
+      <p style="font-size:0.45em; margin-bottom: 20px;">在日常工作中，您是否也遇過以下情境？</p>
+      <div class="grid-3">
+        <div class="glass-card" style="text-align: left;">
+          <h3 style="color:var(--accent); margin-top:0; font-size:0.8em;">1. 根本沒時間看</h3>
+          <p style="font-size: 0.42em; margin: 0;">
+            開會前 10 分鐘，老闆突然丟來一份多達 30 頁的勞基法施行細則或產品說明書，要求等等開會討論。
+          </p>
+        </div>
+        <div class="glass-card" style="text-align: left;">
+          <h3 style="color:var(--accent); margin-top:0; font-size:0.8em;">2. 關鍵細節太多</h3>
+          <p style="font-size: 0.42em; margin: 0;">
+            密密麻麻的文字中隱藏了各種法規限制或條款，手動翻閱極易遺漏重點，開會只能默默放空。
+          </p>
+        </div>
+        <div class="glass-card" style="text-align: left;">
+          <h3 style="color:var(--accent); margin-top:0; font-size:0.8em;">3. ChatGPT 的幻覺</h3>
+          <p style="font-size: 0.42em; margin: 0;">
+            直接問一般 AI，又擔心它隨便胡說八道（AI 幻覺），在老闆面前報錯數據就慘了。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 19: NotebookLM 兩大核心任務 -->
+    <section>
+      <h2>NotebookLM 兩大核心任務</h2>
+      <div class="grid-2">
+        <div class="glass-card" style="text-align: left; border-top: 4px solid var(--accent2);">
+          <h3 style="color:var(--accent2); font-size:0.8em; margin-top:0;">資料餵食 (Input) 📥</h3>
+          <p style="font-size:0.42em; line-height: 1.7; margin:0;">
+            將 PDF 檔案、Google 文件、簡報、或是特定的網頁網址直接上傳或串接進去。<br><br>
+            AI 只會以<strong>「您提供的資料」</strong>作為唯一事實來源進行解析，徹底解決胡說八道的幻覺問題！
+          </p>
+        </div>
+        <div class="glass-card" style="text-align: left; border-top: 4px solid var(--warn);">
+          <h3 style="color:var(--warn); font-size:0.8em; margin-top:0;">知識產出 (Output) 🎙️</h3>
+          <p style="font-size:0.42em; line-height: 1.7; margin:0;">
+            <strong>精準對話</strong>：可以直接向專屬知識庫提問，取得條列重點。<br><br>
+            <strong>語音摘要</strong>：一鍵生成「一男一女」的雙人英文對談 (Audio Overview)，用生動、閒聊的 Podcast 方式把生硬論文或法規講給你聽。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 20: 溝通的藝術：精準 Prompt -->
+    <section>
+      <h2>溝通的藝術：精準 Prompt</h2>
+      <div class="quote-box" style="font-size:0.5em;">
+        「請幫我列出這份文件中，與『員工加班與補休』相關的前三個重點，並用條列式呈現。」
+      </div>
+      <div class="glass-card" style="max-width: 850px; margin: 0 auto; text-align: left;">
+        <h4 style="font-size:0.55em; color:var(--accent2); margin-top:0; margin-bottom:8px;">💡 NotebookLM 最強優勢：引用來源機制</h4>
+        <p style="font-size:0.42em; margin:0; line-height:1.6;">
+          每一次回答的文末，都會附上對應的<strong>「數字標籤」</strong>。點擊該標籤，右側會立刻開啟 PDF 的原始段落，讓你在幾秒內交叉比對，絕對不怕被 AI 矇騙！
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 21: 準備開始 -->
+    <section>
+      <h2>環境準備：進入 NotebookLM</h2>
+      <div class="grid-3">
+        <div class="glass-card">
+          <h3 style="color:var(--accent2); margin-top:0;">01. 瀏覽器</h3>
+          <p style="font-size:0.42em; margin:0;">建議使用 Google Chrome 瀏覽器以獲得最佳的相容性與運作速度。</p>
+        </div>
+        <div class="glass-card">
+          <h3 style="color:var(--accent2); margin-top:0;">02. 登入官網</h3>
+          <p style="font-size:0.42em; margin:0;">前往 <a href="https://notebooklm.google/" target="_blank" style="color:var(--accent2);">NotebookLM 官網</a>，使用您平常的 Google 帳號直接登入即可。</p>
+        </div>
+        <div class="glass-card">
+          <h3 style="color:var(--accent2); margin-top:0;">03. 檔案準備</h3>
+          <p style="font-size:0.42em; margin:0;">準備好講師提供的 PDF 範例檔案：<strong>「勞動基準法施行細則.pdf」</strong>。</p>
+        </div>
+      </div>
+      <p style="font-size:0.38em; color:#8b949e; margin-top:20px; text-align:center;">💡 提示：這是 Google 實驗室產品，目前完全免費！</p>
+    </section>
+
+    <!-- Slide 22: 核心實作 (Part 1)：匯入知識庫 -->
+    <section>
+      <h2>核心實作 1：匯入專屬知識庫</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="ti-date">1. 點擊 New Notebook</div>
+          <div class="ti-text">進入首頁後，點擊左上方的「New Notebook」建立一個新的空白專案。</div>
+        </div>
+        <div class="timeline-item">
+          <div class="ti-date">2. 拖入 PDF 檔案</div>
+          <div class="ti-text">彈出來源選擇視窗，將「勞動基準法施行細則.pdf」直接拖入，或從您的 Google 雲端硬碟中匯入。</div>
+        </div>
+        <div class="timeline-item">
+          <div class="ti-date">3. 建立索引與摘要</div>
+          <div class="ti-text">觀察 AI 如何在數秒內高速掃描數十頁的文件內容，並在畫面左方整理出文件的架構與常用發問建議。</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 23: 核心實作 (Part 2)：生成語音摘要 -->
+    <section>
+      <h2>核心實作 2：必殺技！生成語音摘要</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="ti-date">1. 開啟筆記本指南</div>
+          <div class="ti-text">在網頁的右側面板，找到並點選「Notebook Guide」(筆記本指南) 按鈕。</div>
+        </div>
+        <div class="timeline-item">
+          <div class="ti-date">2. 生成音檔</div>
+          <div class="ti-text">在「Audio Overview」區塊下方，點擊「Generate」按鈕。</div>
+        </div>
+        <div class="timeline-item">
+          <div class="ti-date">3. 聆聽 AI 雙人 Podcast</div>
+          <div class="ti-text">稍微等待 1-2 分鐘，AI 就會生成一段極為自然的雙人對談英文 Podcast，將法規的核心點以討論方式講出來。</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 24: 現場測試：AI 智力大挑戰 -->
+    <section>
+      <h2>現場測試：AI 智力大挑戰 🧪</h2>
+      <div class="grid-3">
+        <div class="glass-card">
+          <h3 style="color:var(--accent2); margin-top:0;">快速問答</h3>
+          <p style="font-size:0.42em; margin:0;">
+            在下方對話框輸入：「這份文件裡關於加班費的計算方式為何？」看 AI 如何迅速整理答案。
+          </p>
+        </div>
+        <div class="glass-card">
+          <h3 style="color:var(--accent2); margin-top:0;">驗證回覆</h3>
+          <p style="font-size:0.42em; margin:0;">
+            點選回覆底部的數字標籤，右側會自動跳轉到 PDF 中對應的法規頁數，親眼確認資料的正確性。
+          </p>
+        </div>
+        <div class="glass-card">
+          <h3 style="color:var(--accent2); margin-top:0;">播放音檔</h3>
+          <p style="font-size:0.42em; margin:0;">
+            播放剛剛生成的音檔，聽聽看這兩位 AI 主持人是否真的抓到了文件的核心關鍵重點！
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 25: 課後小試身手 -->
+    <section>
+      <h2>課後小試身手</h2>
+      <div class="grid-2">
+        <div class="glass-card" style="text-align: left;">
+          <h3 style="color:var(--accent2); margin-top:0;">挑戰 A: 變更來源</h3>
+          <p style="font-size: 0.44em; line-height: 1.7; margin: 0;">
+            試著上傳一則最新的科技新聞連結 (URL)，並發問，看看 AI 整理的摘要與一般網頁閱讀有何不同？
+          </p>
+        </div>
+        <div class="glass-card" style="text-align: left;">
+          <h3 style="color:var(--accent2); margin-top:0;">挑戰 B: 新增多個來源</h3>
+          <p style="font-size: 0.44em; line-height: 1.7; margin: 0;">
+            試著同時拖入「勞基法細則.pdf」與「公司的請假 SOP 文件」，挑戰讓 NotebookLM 跨文件進行邏輯關聯分析！
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 26: 課程核心觀念 -->
+    <section>
+      <h2>課程核心觀念 🎯</h2>
+      <div class="grid-2">
+        <div class="glass-card" style="text-align: left;">
+          <h3 style="color:var(--success); margin-top:0;">不只摘要，更是事實</h3>
+          <p style="font-size: 0.46em; line-height: 1.6; margin: 0;">
+            NotebookLM 的「來源鎖定 (Source-grounded)」機制徹底解決了 AI 亂編故事、偽造事實的問題，讓 AI 回答的每一句話都有據可循。
+          </p>
+        </div>
+        <div class="glass-card" style="text-align: left;">
+          <h3 style="color:var(--accent2); margin-top:0;">改變學習型態</h3>
+          <p style="font-size: 0.46em; line-height: 1.6; margin: 0;">
+            以前我們面對長篇文件需要花費數小時「讀」；現在我們可以透過「問」的、用「聽」的，在 5 分鐘內完成對陌生法規的初步掌握。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 27: 剛剛的 50 分鐘，發生了什麼事？ -->
+    <section data-background-image="images/review.png"
+             data-background-opacity="0.35"
+             data-background-size="cover">
+      <div style="text-align: center; padding: 40px 0;">
+        <h1 style="font-size: 2.0em; color:#fff;">剛剛的 50 分鐘，發生了什麼事？</h1>
+        <p style="font-size: 0.6em; color:#8b949e; margin-top:20px;">我們親自見證了以下奇蹟的發生</p>
+      </div>
+    </section>
+
+    <!-- Slide 28: 職場三大痛點 [ICON] -->
+    <section>
+      <h2>但... 你的真實職場，還有更多痛點吧？</h2>
+      <p style="font-size:0.42em; margin-bottom: 20px;">剛剛只是「單兵作戰」，你的日常可能還充滿著這些低價值重複性工作：</p>
+      <div class="grid-3">
+        <div class="adv-card" style="border-top-color: var(--accent);">
+          <div class="adv-icon"><img src="images/icon_email.png" alt="Email"></div>
+          <div class="adv-title" style="color:var(--accent);">📩 回不完的信</div>
+          <div class="adv-desc">每天要花 2 小時重複回覆 50 封類似的廠商或客戶 Email？</div>
+        </div>
+        <div class="adv-card" style="border-top-color: var(--accent2);">
+          <div class="adv-icon"><img src="images/icon_table.png" alt="Table"></div>
+          <div class="adv-title" style="color:var(--accent2);">📊 做不完的表</div>
+          <div class="adv-desc">每週都要手動去各個後台抓資料、貼到 Excel、套用複雜公式並畫出圖表？</div>
+        </div>
+        <div class="adv-card" style="border-top-color: var(--warn);">
+          <div class="adv-icon"><img src="images/icon_folder.png" alt="Folder"></div>
+          <div class="adv-title" style="color:var(--warn);">📂 找不到的檔</div>
+          <div class="adv-desc">公司的 SOP、歷史合約散落在幾百個層層套疊的資料夾裡，找不到又容易出錯？</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 29: 互動文字雲 [INTERACT:wordcloud] -->
+    <section id="slide-wordcloud">
+      <h2 style="font-size:1.1em; margin-bottom:0.4em;">你的日常工作中，最常重複做哪些無意義的雜事？</h2>
+      <div style="display:grid; grid-template-columns:250px 1fr; gap:14px; height:430px;">
+        <!-- Left: Input & Rank -->
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div style="background:rgba(255,255,255,0.06); border-radius:10px; padding:14px; border: 1px solid rgba(255,255,255,0.08);">
+            <div style="font-size:0.38em; color:var(--accent2); font-weight:700; margin-bottom:8px; text-align:left;">輸入你的答案</div>
+            <input id="wc-input" type="text" placeholder="例：複製貼上、催信…" maxlength="20"
+              style="width:100%; padding:8px 12px; border-radius:8px; border:1px solid rgba(79,195,247,0.3);
+                     background:rgba(255,255,255,0.08); color:#fff; font-size:13px;
+                     box-sizing:border-box; font-family:inherit; outline:none;" />
+            <button id="wc-btn"
+              style="width:100%; margin-top:8px; padding:9px; background:var(--accent2); color:#0d1117;
+                     border:none; border-radius:8px; font-weight:700; font-size:13px; cursor:pointer;">
+              送出 ↵
+            </button>
+          </div>
+          <div style="background:rgba(255,255,255,0.06); border-radius:10px; padding:14px; flex:1; overflow:hidden; display:flex; flex-direction:column; border: 1px solid rgba(255,255,255,0.08);">
+            <div style="font-size:0.38em; color:var(--accent2); font-weight:700; margin-bottom:8px; text-align:left; display:flex; justify-content:space-between; align-items:center;">
+              <span>熱門回答</span>
+              <span style="display:inline-block; background:#ff4757; color:#fff; padding:2px 7px;
+                           border-radius:10px; font-size:0.85em; animation:pulse 1.5s infinite; font-weight:800;">LIVE</span>
+            </div>
+            <div id="wc-list" style="font-size:0.34em; overflow-y:auto; flex:1; color:#ccc; text-align:left;"></div>
+            <div style="margin-top:8px; font-size:0.32em; color:#666; border-top:1px solid rgba(255,255,255,0.08); padding-top:6px; text-align:left;">
+              總計：<span id="wc-total" style="color:var(--accent); font-weight:700;">0</span>　
+              樣式：<span id="wc-unique" style="color:var(--accent2); font-weight:700;">0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Wordcloud Canvas -->
+        <div style="background:rgba(255,255,255,0.03); border-radius:12px; overflow:hidden;
+                    position:relative; border:1px solid rgba(255,255,255,0.07);">
+          <canvas id="wc-canvas" style="width:100%; height:100%; display:block;"></canvas>
+          <div id="wc-empty" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+                                     color:#555; font-size:0.42em; text-align:center;
+                                     pointer-events:none; line-height:2;">
+            輸入您的答案<br>即時文字雲就會呈現 ✨
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 30: 互動投票 [INTERACT:poll] -->
+    <section id="slide-poll">
+      <h2 style="font-size:1.1em; margin-bottom:0.4em;">自動化想像：您最希望優先將哪種工作「自動化」？</h2>
+      <div id="poll-options" style="display:flex; flex-direction:column; gap:12px; margin-top:0.8em; max-width: 650px; margin-left: auto; margin-right: auto;">
+        <!-- Javascript will dynamically build buttons here -->
+      </div>
+      <div style="font-size:0.38em; color:#666; text-align:center; margin-top:1.0em;">
+        已投票：<span id="poll-total" style="color:var(--accent2); font-weight:800;">0</span> 人
+      </div>
+    </section>
+
+    <!-- Slide 31: 正式課程章節封面 -->
+    <section data-background-image="images/course.png"
+             data-background-opacity="0.3"
+             data-background-size="cover">
+      <div style="text-align: center; padding: 40px 0;">
+        <span style="font-size:0.5em; color:var(--warn); font-weight:800; letter-spacing:0.2em; text-transform:uppercase;">正式課程介紹</span>
+        <h1 style="font-size: 2.2em; margin-top:10px; color:#fff;">職場 Vibe Coding 工作術</h1>
+        <p style="font-size:0.65em; color:#ffb74d; margin-top:20px;">Google 生態系 AI 實戰班</p>
+      </div>
+    </section>
+
+    <!-- Slide 32: Day 1: AI 數位分身 -->
+    <section>
+      <h2>Day 1: AI 數位分身 (1/18 週日)</h2>
+      <p style="font-size:0.45em; margin-bottom:15px; text-align:center;">專注解決：行政雜事、會議記錄、大量內容產出與簡報製作</p>
+      <div class="grid-2">
+        <div class="glass-card" style="text-align: left;">
+          <h3 style="color:var(--accent); font-size:0.8em; margin-top:0;">🔮 Vibe Coding 起手式</h3>
+          <p style="font-size: 0.42em; margin:0;">學會跟 AI 講話的「高效率黃金 Prompt」公式，讓 AI 能 100% 懂您的工作邏輯並完美寫出可用指令碼。</p>
+        </div>
+        <div class="glass-card" style="text-align: left;">
+          <h3 style="color:var(--accent2); font-size:0.8em; margin-top:0;">🔍 資訊煉金術</h3>
+          <p style="font-size: 0.42em; margin:0;">掌握 Deep Research 進行市場調查。利用 AI 秒讀 50 頁生硬財報與厚重合約，且一鍵產出語音 Podcast。</p>
+        </div>
+        <div class="glass-card" style="text-align: left; margin-top:10px;">
+          <h3 style="color:var(--warn); font-size:0.8em; margin-top:0;">🎙️ 會議自動化</h3>
+          <p style="font-size: 0.42em; margin:0;">利用錄音檔一鍵轉為逐字稿，並由 AI 自動產出精準的會議記錄與後續待辦清單 (Action Items)。</p>
+        </div>
+        <div class="glass-card" style="text-align: left; margin-top:10px;">
+          <h3 style="color:var(--success); font-size:0.8em; margin-top:0;">🎨 簡報神隊友</h3>
+          <p style="font-size: 0.42em; margin:0;">學會只說一句話，就自動命令 AI 生成 Google Slides 簡報架構、排版內文與生成風格統一的插圖。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 33: Day 2: 數據賦能與自動化 -->
+    <section>
+      <h2>Day 2: 數據與微自動化 (2/14 週六)</h2>
+      <p style="font-size:0.45em; margin-bottom:15px; text-align:center;">專注解決：大數據清洗分析、企業專屬知識庫建置、跨軟體工作流串接</p>
+      <div class="grid-2">
+        <div class="glass-card" style="text-align: left;">
+          <h3 style="color:var(--accent2); font-size:0.8em; margin-top:0;">📈 試算表 Vibe Coding</h3>
+          <p style="font-size: 0.42em; margin:0;">用對話完成試算表髒資料的深度清洗、標準化，並由 AI 自動生成商業洞察圖表與每月銷售亮點。</p>
+        </div>
+        <div class="glass-card" style="text-align: left;">
+          <h3 style="color:var(--warn); font-size:0.8em; margin-top:0;">🧠 打造企業第二大腦</h3>
+          <p style="font-size: 0.42em; margin:0;">匯入公司所有繁複的 SOP 與法規，建立企業專屬的 NotebookLM 知識問答庫，隨問隨答、秒查條文。</p>
+        </div>
+        <div class="glass-card" style="text-align: left; margin-top:10px;">
+          <h3 style="color:var(--accent); font-size:0.8em; margin-top:0;">🤖 跨系統微自動化</h3>
+          <p style="font-size: 0.42em; margin:0;">指揮 AI 撰寫 GAS 進行系統串接：偵測新表單提交後，自動生成通知信、自動歸檔，實現全自動流程。</p>
+        </div>
+        <div class="glass-card" style="text-align: left; margin-top:10px;">
+          <h3 style="color:var(--success); font-size:0.8em; margin-top:0;">🚀 期末實戰展示</h3>
+          <p style="font-size: 0.42em; margin:0;">手把手帶您設計出一套專屬於您自己工作情境的「全自動化流水線」，直接帶回家套用到工作中！</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 34: 工商時間：Vibe Coding 班 -->
+    <section>
+      <h2>正式課 A：職場 Vibe Coding 工作術</h2>
+      <div class="grid-2" style="align-items: center;">
+        <div class="glass-card" style="text-align: left;">
+          <h3 style="color:var(--accent2); font-size:0.85em; margin-top:0; margin-bottom: 8px;">Google 生態系 AI 實戰班</h3>
+          <p style="font-size: 0.42em; line-height: 1.7; margin: 0;">
+            📅 <strong>上課時間</strong>：01/18(日)、02/14(六)，共 12 小事<br>
+            ⏰ <strong>時間分配</strong>：AM 9:00~12:00 / PM 1:30~4:30<br>
+            🎓 <strong>課程特色</strong>：零程式基礎，僅需 Google 帳號！<br>
+            🎁 <strong>課程收費</strong>：請掃描右方表單洽詢
+          </p>
+        </div>
+        <div class="qr-container" style="margin:0;">
+          <img class="qr-code" style="width:170px; height:170px;" src="https://api.qrserver.com/v1/create-qr-code/?size=170x170&data=https://forms.gle/rNfrgyHtF8hG2pvt9" alt="Form">
+          <a class="qr-link" style="font-size:0.42em;" href="https://forms.gle/rNfrgyHtF8hG2pvt9" target="_blank">點我前往報名表單</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 35: 工商時間：GAS 班 -->
+    <section>
+      <h2>正式課 B：Gemini+GAS Vibe Coding</h2>
+      <div class="grid-2" style="align-items: center;">
+        <div class="glass-card" style="text-align: left;">
+          <h3 style="color:var(--warn); font-size:0.85em; margin-top:0; margin-bottom: 8px;">一鍵搞定 Google 辦公室自動化</h3>
+          <p style="font-size: 0.42em; line-height: 1.7; margin: 0;">
+            📅 <strong>上課時間</strong>：01/17(六)、01/24(六)，共 12 小時<br>
+            ⏰ <strong>時間分配</strong>：AM 9:00~12:00 / PM 1:30~4:30<br>
+            🎓 <strong>課程特色</strong>：實戰 GAS 自動化，用對話代替手動修改！<br>
+            🎁 <strong>課程收費</strong>：請掃描右方表單洽詢
+          </p>
+        </div>
+        <div class="qr-container" style="margin:0;">
+          <img class="qr-code" style="width:170px; height:170px;" src="https://api.qrserver.com/v1/create-qr-code/?size=170x170&data=https://forms.gle/TCFWGwqTZb16v4ry7" alt="Form">
+          <a class="qr-link" style="font-size:0.42em;" href="https://forms.gle/TCFWGwqTZb16v4ry7" target="_blank">點我前往報名表單</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 36: 工商時間：Excel 班 -->
+    <section>
+      <h2>正式課 C：Excel Vibe Coding</h2>
+      <div class="grid-2" style="align-items: center;">
+        <div class="glass-card" style="text-align: left;">
+          <h3 style="color:var(--success); font-size:0.85em; margin-top:0; margin-bottom: 8px;">AI 自動化魔法師養成班</h3>
+          <p style="font-size: 0.42em; line-height: 1.7; margin: 0;">
+            📅 <strong>上課時間</strong>：02/28(六)、03/14(六)，共 12 小時<br>
+            ⏰ <strong>時間分配</strong>：AM 9:00~12:00 / PM 1:30~4:30<br>
+            🎓 <strong>課程特色</strong>：以 AI 寫 VBA/Office Scripts，降維打擊髒資料！<br>
+            🎁 <strong>課程收費</strong>：請掃描右方表單洽詢
+          </p>
+        </div>
+        <div class="qr-container" style="margin:0;">
+          <img class="qr-code" style="width:170px; height:170px;" src="https://api.qrserver.com/v1/create-qr-code/?size=170x170&data=https://forms.gle/vdd5Ck2Xt9RwW5WM9" alt="Form">
+          <a class="qr-link" style="font-size:0.42em;" href="https://forms.gle/vdd5Ck2Xt9RwW5WM9" target="_blank">點我前往報名表單</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 37: 封底 -->
+    <section data-background-image="images/ending.png"
+             data-background-opacity="0.4"
+             data-background-size="cover">
+      <div class="end-slide">
+        <div class="big">
+          <img src="images/icon_goal.png" alt="Goal"
+               style="width:140px; height:140px; object-fit:contain;
+                      filter:drop-shadow(0 0 24px rgba(79,195,247,0.7));">
+        </div>
+        <h1 style="color:var(--accent2);">Thank You for Your Attention</h1>
+        <p class="tagline">謝謝參與！用對話賦予你的工作超能力，現在就開始你的 Vibe Coding 旅程！</p>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    transition: 'slide',
+    transitionSpeed: 'default',
+    backgroundTransition: 'fade',
+    center: true,
+    progress: true,
+    controls: true,
+    slideNumber: 'c/t',
+    plugins: []
+  });
+</script>
+
+<!-- Firebase 即時互動模組 -->
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js';
+  import {
+    getFirestore, collection, addDoc, onSnapshot,
+    serverTimestamp, query, orderBy, doc, setDoc
+  } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js';
+
+  // 1. 初始化 Firebase (共用示範專案 teacherstudy-109ef)
+  const firebaseConfig = {
+    apiKey: "AIzaSyAYQhNavPSce17XtvDC5xnXyl9iUhW9KjA",
+    authDomain: "teacherstudy-109ef.firebaseapp.com",
+    projectId: "teacherstudy-109ef",
+    storageBucket: "teacherstudy-109ef.firebasestorage.app",
+    messagingSenderId: "196599230156",
+    appId: "1:196599230156:web:cfe55d364df3ae1b9d5c69"
+  };
+  const app = initializeApp(firebaseConfig);
+  const fdb = getFirestore(app);
+
+  // ==========================================
+  // A. 即時互動元件一：文字雲 (Slide 29)
+  // ==========================================
+  const wordsRef = collection(fdb, 'vibe_coding_wordcloud');
+  const COLORS = ['#4fc3f7','#e8643a','#ffb74d','#81c784','#ce93d8','#80deea','#f48fb1'];
+  let wcData = [];
+
+  window.wcSubmit = async function() {
+    const input = document.getElementById('wc-input');
+    const word = input.value.trim();
+    if (!word) return;
+    const btn = document.getElementById('wc-btn');
+    btn.disabled = true;
+    try {
+      await addDoc(wordsRef, { word, created_at: serverTimestamp() });
+      input.value = '';
+    } catch(e) { console.error(e); }
+    finally { btn.disabled = false; }
+  };
+
+  document.getElementById('wc-input')?.addEventListener('keypress', e => {
+    if (e.key === 'Enter') window.wcSubmit();
+  });
+  document.getElementById('wc-btn')?.addEventListener('click', window.wcSubmit);
+
+  onSnapshot(query(wordsRef, orderBy('created_at', 'asc')), snap => {
+    const words = [];
+    snap.forEach(doc => words.push(doc.data().word));
+    const counts = {};
+    words.forEach(w => counts[w] = (counts[w] || 0) + 1);
+    wcData = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+
+    document.getElementById('wc-total').textContent = words.length;
+    document.getElementById('wc-unique').textContent = wcData.length;
+
+    const listEl = document.getElementById('wc-list');
+    listEl.innerHTML = wcData.slice(0, 10).map(([w, c]) =>
+      `<div style="display:flex;justify-content:space-between;padding:4px 0;
+                   border-bottom:1px solid rgba(255,255,255,0.06);">
+        <span>${w}</span><span style="color:var(--accent);font-weight:800;">${c}</span>
+      </div>`
+    ).join('') || '<div style="color:#555;padding:8px 0;">尚無答案</div>';
+
+    const empty = document.getElementById('wc-empty');
+    if (empty) empty.style.display = wcData.length > 0 ? 'none' : '';
+    drawWordCloud();
+  });
+
+  function drawWordCloud() {
+    const canvas = document.getElementById('wc-canvas');
+    if (!canvas || typeof WordCloud === 'undefined') return;
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width < 10 || rect.height < 10) return;
+    canvas.width = rect.width;
+    canvas.height = rect.height;
+    if (wcData.length === 0) return;
+    const maxCount = wcData[0][1];
+    
+    WordCloud(canvas, {
+      list: wcData.map(([w, c]) => [w, Math.max(16, Math.round((c / maxCount) * 60))]),
+      gridSize: 8,
+      weightFactor: 1,
+      fontFamily: '"Noto Sans TC", "Microsoft JhengHei", sans-serif',
+      color: () => COLORS[Math.floor(Math.random() * COLORS.length)],
+      backgroundColor: 'transparent',
+      rotateRatio: 0.2,
+      shuffle: true,
+    });
+  }
+
+  // ==========================================
+  // B. 即時互動元件二：單選投票 (Slide 30)
+  // ==========================================
+  const OPTIONS = [
+    { id: 'a', label: 'A. 自動撰寫與回覆 Email 信件 📩' },
+    { id: 'b', label: 'B. 自動整合數據並產出 Excel 圖表報告 📊' },
+    { id: 'c', label: 'C. 自動歸檔、分類與整理公司的大量檔案 📂' },
+    { id: 'd', label: 'D. 全部都希望自動化！我想要準時下班 ⏰' },
+  ];
+  const pollRef = doc(fdb, 'vibe_coding_poll', 'results');
+  const userId = 'user_' + Math.random().toString(36).slice(2, 9);
+  let myVote = null;
+
+  // 渲染投票選項
+  const container = document.getElementById('poll-options');
+  if (container) {
+    OPTIONS.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.id = `poll-btn-${opt.id}`;
+      btn.innerHTML = `
+        <div style="display:flex;align-items:center;gap:12px;width:100%;">
+          <span style="flex:0 0 20px;height:20px;border-radius:50%;border:2px solid rgba(255,255,255,0.3);
+                       display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;"
+                id="poll-check-${opt.id}"></span>
+          <span style="flex:1;text-align:left;">${opt.label}</span>
+          <span id="poll-bar-wrap-${opt.id}"
+                style="flex:0 0 100px;height:8px;background:rgba(255,255,255,0.1);border-radius:4px;overflow:hidden;">
+            <div id="poll-bar-${opt.id}" style="height:100%;width:0;background:var(--accent2);border-radius:4px;transition:width 0.4s;"></div>
+          </span>
+          <span id="poll-pct-${opt.id}" style="flex:0 0 36px;text-align:right;font-size:0.85em;color:#8b949e;font-weight:700;">0%</span>
+        </div>
+      `;
+      btn.style.cssText = `width:100%;padding:10px 14px;background:rgba(255,255,255,0.05);
+        border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:#fff;
+        font-size:0.44em;cursor:pointer;font-family:inherit;text-align:left;transition:all 0.2s;`;
+      
+      btn.onmouseenter = () => btn.style.background = 'rgba(255,255,255,0.08)';
+      btn.onmouseleave = () => btn.style.background = myVote === opt.id ? 'rgba(79,195,247,0.12)' : 'rgba(255,255,255,0.05)';
+      
+      btn.onclick = () => vote(opt.id);
+      container.appendChild(btn);
+    });
+  }
+
+  async function vote(optId) {
+    myVote = optId;
+    
+    // 更新按鈕樣式
+    OPTIONS.forEach(opt => {
+      const btn = document.getElementById(`poll-btn-${opt.id}`);
+      if (btn) btn.style.background = opt.id === optId ? 'rgba(79,195,247,0.12)' : 'rgba(255,255,255,0.05)';
+    });
+
+    const data = {};
+    data[`votes.${userId}`] = optId;
+    data.updated_at = serverTimestamp();
+    await setDoc(pollRef, data, { merge: true });
+  }
+
+  onSnapshot(pollRef, snap => {
+    const data = snap.data() || {};
+    const votes = data.votes || {};
+    const counts = {};
+    OPTIONS.forEach(o => counts[o.id] = 0);
+    Object.values(votes).forEach(v => { if (counts[v] !== undefined) counts[v]++; });
+    const total = Object.values(counts).reduce((a, b) => a + b, 0);
+
+    const totalEl = document.getElementById('poll-total');
+    if (totalEl) totalEl.textContent = total;
+
+    OPTIONS.forEach(opt => {
+      const pct = total > 0 ? Math.round((counts[opt.id] / total) * 100) : 0;
+      
+      const barEl = document.getElementById(`poll-bar-${opt.id}`);
+      if (barEl) barEl.style.width = pct + '%';
+      
+      const pctEl = document.getElementById(`poll-pct-${opt.id}`);
+      if (pctEl) pctEl.textContent = pct + '%';
+      
+      const checkEl = document.getElementById(`poll-check-${opt.id}`);
+      if (checkEl) {
+        if (myVote === opt.id) {
+          checkEl.textContent = '✓';
+          checkEl.style.background = 'var(--accent2)';
+          checkEl.style.borderColor = 'var(--accent2)';
+          checkEl.style.color = '#0d1117';
+        } else {
+          checkEl.textContent = '';
+          checkEl.style.background = 'transparent';
+          checkEl.style.borderColor = 'rgba(255,255,255,0.3)';
+        }
+      }
+    });
+  });
+
+  // ==========================================
+  // C. Reveal.js 切頁監聽：切入時重新計算/渲染
+  // ==========================================
+  Reveal.on('slidechanged', e => {
+    if (e.currentSlide?.id === 'slide-wordcloud') {
+      setTimeout(drawWordCloud, 250);
+    }
+  });
+
+  // 視窗大小改變時重繪文字雲
+  window.addEventListener('resize', () => {
+    if (Reveal.getCurrentSlide()?.id === 'slide-wordcloud') {
+      drawWordCloud();
+    }
+  });
+</script>
+
+<!-- VIZ Before/After 滑桿揭露效果程式碼 (Slide 6) -->
+<script>
+  const vizSlider = document.getElementById('viz-slider');
+  const vizAfter = document.getElementById('viz-after');
+  const vizDivider = document.getElementById('viz-divider');
+
+  if (vizSlider && vizAfter && vizDivider) {
+    vizSlider.addEventListener('input', function() {
+      const v = +this.value;
+      vizAfter.style.clipPath = `inset(0 ${100 - v}% 0 0)`;
+      vizDivider.style.left = v + '%';
+    });
+    
+    // 初始化位置
+    vizAfter.style.clipPath = 'inset(0 100% 0 0)';
+    vizDivider.style.left = '0%';
+  }
+</script>
+
+</body>
+</html>
